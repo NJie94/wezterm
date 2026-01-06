@@ -6,7 +6,8 @@ local act = wezterm.action
 local mod = {}
 
 if platform.is_mac then
-   mod.SUPER = 'SUPER'
+   -- mod.SUPER = 'SUPER'
+   mod.SUPER = 'OPTION'
    mod.SUPER_REV = 'SUPER|CTRL'
 elseif platform.is_win or platform.is_linux then
    mod.SUPER = 'ALT' -- to not conflict with Windows key shortcuts
@@ -60,7 +61,7 @@ local keys = {
    -- tabs --
    -- tabs: spawn+close
    { key = 't',          mods = mod.SUPER,     action = act.SpawnTab('DefaultDomain') },
-   { key = 't',          mods = mod.SUPER_REV, action = act.SpawnTab({ DomainName = 'wsl:ubuntu-fish' }) },
+   -- { key = 't',          mods = mod.SUPER_REV, action = act.SpawnTab({ DomainName = 'wsl:ubuntu-fish' }) },
    { key = 'w',          mods = mod.SUPER_REV, action = act.CloseCurrentTab({ confirm = false }) },
 
    -- tabs: navigation
@@ -81,39 +82,39 @@ local keys = {
    { key = 'n',          mods = mod.SUPER,     action = act.SpawnWindow },
 
    -- window: zoom window
-   {
-      key = '-',
-      mods = mod.SUPER,
-      action = wezterm.action_callback(function(window, _pane)
-         local dimensions = window:get_dimensions()
-         if dimensions.is_full_screen then
-            return
-         end
-         local new_width = dimensions.pixel_width - 50
-         local new_height = dimensions.pixel_height - 50
-         window:set_inner_size(new_width, new_height)
-      end)
-   },
-   {
-      key = '=',
-      mods = mod.SUPER,
-      action = wezterm.action_callback(function(window, _pane)
-         local dimensions = window:get_dimensions()
-         if dimensions.is_full_screen then
-            return
-         end
-         local new_width = dimensions.pixel_width + 50
-         local new_height = dimensions.pixel_height + 50
-         window:set_inner_size(new_width, new_height)
-      end)
-   },
-   {
-      key = 'Enter',
-      mods = mod.SUPER_REV,
-      action = wezterm.action_callback(function(window, _pane)
-         window:maximize()
-      end)
-   },
+   -- {
+   --    key = '-',
+   --    mods = mod.SUPER,
+   --    action = wezterm.action_callback(function(window, _pane)
+   --       local dimensions = window:get_dimensions()
+   --       if dimensions.is_full_screen then
+   --          return
+   --       end
+   --       local new_width = dimensions.pixel_width - 50
+   --       local new_height = dimensions.pixel_height - 50
+   --       window:set_inner_size(new_width, new_height)
+   --    end)
+   -- },
+   -- {
+   --    key = '=',
+   --    mods = mod.SUPER,
+   --    action = wezterm.action_callback(function(window, _pane)
+   --       local dimensions = window:get_dimensions()
+   --       if dimensions.is_full_screen then
+   --          return
+   --       end
+   --       local new_width = dimensions.pixel_width + 50
+   --       local new_height = dimensions.pixel_height + 50
+   --       window:set_inner_size(new_width, new_height)
+   --    end)
+   -- },
+   -- {
+   --    key = 'Enter',
+   --    mods = mod.SUPER_REV,
+   --    action = wezterm.action_callback(function(window, _pane)
+   --       window:maximize()
+   --    end)
+   -- },
 
    -- background controls --
    {
@@ -170,8 +171,8 @@ local keys = {
       action = act.SplitVertical({ domain = 'CurrentPaneDomain' }),
    },
    {
-      key = [[\]],
-      mods = mod.SUPER_REV,
+      key = [[-]],
+      mods = mod.SUPER,
       action = act.SplitHorizontal({ domain = 'CurrentPaneDomain' }),
    },
 
@@ -180,10 +181,10 @@ local keys = {
    { key = 'w',     mods = mod.SUPER,     action = act.CloseCurrentPane({ confirm = false }) },
 
    -- panes: navigation
-   { key = 'k',     mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Up') },
-   { key = 'j',     mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Down') },
-   { key = 'h',     mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Left') },
-   { key = 'l',     mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Right') },
+   { key = 'k',     mods = mod.SUPER, action = act.ActivatePaneDirection('Up') },
+   { key = 'j',     mods = mod.SUPER, action = act.ActivatePaneDirection('Down') },
+   { key = 'h',     mods = mod.SUPER, action = act.ActivatePaneDirection('Left') },
+   { key = 'l',     mods = mod.SUPER, action = act.ActivatePaneDirection('Right') },
    {
       key = 'p',
       mods = mod.SUPER_REV,
@@ -204,7 +205,7 @@ local keys = {
       action = act.ActivateKeyTable({
          name = 'resize_font',
          one_shot = false,
-         timemout_milliseconds = 1000,
+         timemout_milliseconds = 2000,
       }),
    },
    -- resize panes
@@ -214,7 +215,7 @@ local keys = {
       action = act.ActivateKeyTable({
          name = 'resize_pane',
          one_shot = false,
-         timemout_milliseconds = 1000,
+         timemout_milliseconds = 2000,
       }),
    },
 }
@@ -248,9 +249,9 @@ local mouse_bindings = {
 }
 
 return {
-   disable_default_key_bindings = true,
+   -- disable_default_key_bindings = true,
    -- disable_default_mouse_bindings = true,
-   leader = { key = 'Space', mods = mod.SUPER_REV },
+   leader = { key = 'Space', mods = mod.SUPER },
    keys = keys,
    key_tables = key_tables,
    mouse_bindings = mouse_bindings,

@@ -6,8 +6,9 @@ local options = {
 }
 
 if platform.is_win then
-   options.default_prog = { 'C:\\Program Files\\Git\\bin\\bash.exe --login -i' }
+   options.default_prog = {"wsl.exe", "-d", "Ubuntu"}
    options.launch_menu = {
+      { label = 'WSL Ububtu', args = {"wsl.exe", "-d", "Ubuntu"} },
       { label = 'PowerShell Core', args = { 'pwsh', '-NoLogo' } },
       { label = 'PowerShell Desktop', args = { 'powershell' } },
       { label = 'Command Prompt', args = { 'cmd' } },
